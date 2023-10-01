@@ -1,0 +1,8 @@
+#ifndef C_TESTS_H
+#define C_TESTS_H
+
+#define ERROR_MESSAGE_MAX_LEN 264
+#define GROUP_TEST_NAME_MAX_LEN 100
+#define TEST_NAME_MAX_LEN 100
+
+#endif
