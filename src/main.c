@@ -2,15 +2,21 @@
 
 #include "c_tests.h"
 
+TEST(first_group, test_a) {
+    printf("Hello from test a\n");
+    EXPECT(1 + 1 == 2);
+    printf("success\n");
+}
+
+TEST(second_group, test_b) {
+    printf("Hello from test b\n");
+    EXPECT(1 + 1 == 3);
+    printf("success\n");
+}
+
 int main() {
+    printf("Main\n");
+    run_all_c_tests();
 
-  EXPECT(1 + 2 == 3);
-
-  printf("first test passed\n");
-
-  EXPECT(1 + 1 == 3);
-
-  printf("second test passed");
-
-  return 0;
+    return 0;
 }

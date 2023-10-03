@@ -1,20 +1,31 @@
 #ifndef C_TESTS_H
 #define C_TESTS_H
 
+#include <stdio.h>
+
+#include "c_tests_vector.h"
 #include "config.h"
+#include "error_message.h"
 
-// struct c_tests_error_message {
-//     int error;
-//     char error_message[ERROR_MESSAGE_MAX_LEN];
-// };
+extern c_tests_vector global_c_tests;
 
-// #define TEST(group_test_name, test_name)
-//     int ##group_test_name_##test_name_test()
-//     int ##group_test_name_##test_name_test()
+int run_all_c_tests();
+void global_c_tests_init() __attribute__((constructor));
 
-#define EXPECT(bool_value)                                                     \
-  if (!(bool_value)) {                                                         \
-    return 1;                                                                  \
-  }
+#define TEST(group_test_name, test_name)                                        \
+    void test_##group_test_name##_##test_name();                                \
+    void start_##group_test_name##_##test_name() __attribute__((constructor));  \
+    void start_##group_test_name##_##test_name() {                              \
+        c_tests_node test = {.test_func = test_##group_test_name##_##test_name, \
+                             .group_name = #group_test_name,                    \
+                             .name = #test_name};                               \
+        c_tests_vector_add(&global_c_tests, &test);                             \
+    }                                                                           \
+    void test_##group_test_name##_##test_name()
 
-#endif // C_TESTS_H
+#define EXPECT(bool_value) \
+    if (!(bool_value)) {   \
+        return;            \
+    }
+
+#endif  // C_TESTS_H
