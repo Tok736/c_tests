@@ -1,6 +1,7 @@
 #ifndef C_TESTS_VECTOR_H
 #define C_TESTS_VECTOR_H
 
+#include <stdbool.h>
 #include <stdlib.h>
 
 #include "config.h"
