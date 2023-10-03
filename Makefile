@@ -1,17 +1,23 @@
 .PHONY: all build clean
 
-CC = gcc
-FLAGS = -Werror -Wall -Wextra -std=c11
-
-BUILD = ./build
-SRC = ./src
-INCLUDE = ./include
+BUILD = build
+SRC = src
+INCLUDE = include
 TARGET = $(BUILD)/build
 
-all: build
+CC = gcc
+FLAGS = -Werror -Wall -Wextra -std=c11 -fsanitize=address -I$(INCLUDE)
 
-build: $(wildcard $(SRC)/*.c)
-	$(CC) $(FLAGS) -I$(INCLUDE) $^ -o $(TARGET)
+EXAMPLE_C = $(SRC)/example.c
+SRC_FILES = $(wildcard $(SRC)/*.c)
+
+all: test
+
+test: $(filter-out $(EXAMPLE_C), $(SRC_FILES))
+	$(CC) $(FLAGS) -fPIC -shared $^ -o $(TARGET)
+
+example: $(SRC_FILES)
+	$(CC) $(FLAGS) $^ -o $(TARGET)
 
 clean:
 	rm $(TARGET)
