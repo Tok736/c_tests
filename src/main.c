@@ -3,19 +3,16 @@
 #include "c_tests.h"
 
 TEST(first_group, test_a) {
-    printf("Hello from test a\n");
-    EXPECT(1 + 1 == 2);
-    printf("success\n");
+    int a = 1, b = 1;
+    EXPECT(a + b == 2);
 }
 
 TEST(second_group, test_b) {
-    printf("Hello from test b\n");
-    EXPECT(1 + 1 == 3);
-    printf("success\n");
+    int a = 2, b = 2;
+    EXPECT(a + b == 3);
 }
 
 int main() {
-    printf("Main\n");
     run_all_c_tests();
 
     return 0;

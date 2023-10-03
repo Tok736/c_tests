@@ -10,7 +10,7 @@
 #define C_TESTS_GROW_FACTOR 2
 
 typedef struct c_tests_node {
-    void (*test_func)();
+    void (*test_func)(c_tests_error_message *);
     char group_name[GROUP_TEST_NAME_MAX_LEN];
     char name[TEST_NAME_MAX_LEN];
 } c_tests_node;

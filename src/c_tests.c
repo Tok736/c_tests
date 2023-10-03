@@ -3,9 +3,14 @@
 c_tests_vector global_c_tests;
 
 int run_all_c_tests() {
-    printf("Test running\n");
     for (size_t i = 0; i < global_c_tests.size; i++) {
-        global_c_tests.tests[i].test_func();
+        c_tests_error_message message = {.error = TEST_SUCCESS, .error_message = ""};
+        global_c_tests.tests[i].test_func(&message);
+        if (message.error == TEST_SUCCESS) {
+            printf("[ PASS ] %s\n", global_c_tests.tests[i].name);
+        } else if (message.error == TEST_ERROR) {
+            printf("[ FAIL ] %s: %s\n", global_c_tests.tests[i].name, message.error_message);
+        }
     }
     c_tests_vector_clear(&global_c_tests);
     return 0;
