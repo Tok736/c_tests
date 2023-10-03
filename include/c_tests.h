@@ -24,11 +24,11 @@ void global_c_tests_init() __attribute__((constructor));
     }                                                                           \
     void test_##group_test_name##_##test_name(c_tests_error_message *message)
 
-#define EXPECT(bool_value)                           \
-    if (!(bool_value)) {                             \
-        message->error = TEST_ERROR;                 \
-        strcpy(message->error_message, #bool_value); \
-        return;                                      \
+#define EXPECT(bool_value)                                         \
+    if (!(bool_value)) {                                           \
+        message->error = TEST_ERROR;                               \
+        strcpy(message->error_message, "EXPECT(" #bool_value ")"); \
+        return;                                                    \
     }
 
 #endif  // C_TESTS_H
