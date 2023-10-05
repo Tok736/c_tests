@@ -11,9 +11,9 @@ FLAGS = -Werror -Wall -Wextra -std=c11 -fsanitize=address -I$(INCLUDE)
 EXAMPLE_C = $(SRC)/example.c
 SRC_FILES = $(wildcard $(SRC)/*.c)
 
-all: test
+default: example
 
-test: $(filter-out $(EXAMPLE_C), $(SRC_FILES))
+c_tests: $(filter-out $(EXAMPLE_C), $(SRC_FILES))
 	$(CC) $(FLAGS) -fPIC -shared $^ -o $(TARGET)
 
 example: $(SRC_FILES)

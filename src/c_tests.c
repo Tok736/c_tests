@@ -2,14 +2,9 @@
 
 c_tests_vector global_c_tests;
 
-#define PRINT_RED "\033[0;31m"
-#define PRINT_GREEN "\033[0;32m"
-#define PRINT_DEFAULT "\033[0m"
-
 static int handle_test(c_tests_node *test) {
     int error;
-    c_tests_error_message message = {.error = TEST_SUCCESS,
-                                     .error_message = ""};
+    c_tests_error_message message = {.error = TEST_SUCCESS, .error_message = ""};
     test->test_func(&message);
     error = message.error;
     if (error == TEST_SUCCESS) {
@@ -18,8 +13,7 @@ static int handle_test(c_tests_node *test) {
     } else if (error == TEST_ERROR) {
         printf(PRINT_RED "[ FAIL ] ");
         printf(PRINT_DEFAULT "%s\n", test->name);
-        printf(PRINT_RED "    %s\n", message.error_message);
-        printf(PRINT_DEFAULT);
+        printf(PRINT_RED "    %s\n" PRINT_DEFAULT, message.error_message);
     }
     return error;
 }
@@ -33,10 +27,8 @@ int run_not_launched_by_group_name(char *group_name, int *was_launched) {
 
     size_t success_amount = 0, n = global_c_tests.size;
     for (size_t i = 0; i < n; i++) {
-        if (!was_launched[i] &&
-            strcmp(group_name, global_c_tests.tests[i].group_name) == 0) {
-            if (handle_test(&global_c_tests.tests[i]) == TEST_SUCCESS)
-                success_amount++;
+        if (!was_launched[i] && strcmp(group_name, global_c_tests.tests[i].group_name) == 0) {
+            if (handle_test(&global_c_tests.tests[i]) == TEST_SUCCESS) success_amount++;
             was_launched[i] = true;
         }
     }
@@ -69,8 +61,8 @@ int run_all_c_tests() {
     for (size_t i = 0; i < n; i++) {
         if (!was_launched[i]) {
             printf("(%zu) ", test_num);
-            success_amount += run_not_launched_by_group_name(
-                global_c_tests.tests[i].group_name, was_launched);
+            success_amount +=
+                run_not_launched_by_group_name(global_c_tests.tests[i].group_name, was_launched);
             test_num++;
         }
     }

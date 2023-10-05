@@ -22,6 +22,15 @@ TEST(many_expects, increment_test) {
     EXPECT(a == 3);
 }
 
+TEST(debug_expect, debug_expect_example) {
+    int a = 1;
+    a++;
+    DEBUG_EXPECT(a == 3) {
+        printf("It's a debug expect. When a condition is false this code will be executed\n");
+        printf("a = %d\n", a);
+    }
+}
+
 int main() {
     // Running all the tests
     run_all_c_tests();
